@@ -106,7 +106,7 @@ Get Container Logs
     Should Be Equal As Integers  ${rc}  0
     Should Not Contain  ${output}  Error
     ${vmName}=  Get VM Display Name  ${container}
-    ${rc}  ${output}=  Run And Return Rc and Output  curl -sk %{VIC-ADMIN}/container-logs.tar.gz -b /tmp/cookies-%{VCH-NAME} | (cd /tmp; tar xvzf - ${vmName}/tether.debug ${vmName}/vmware.log)
+    ${rc}  ${output}=  Run And Return Rc and Output  curl --retry 5 --retry-delay 5 -sk %{VIC-ADMIN}/container-logs.tar.gz -b /tmp/cookies-%{VCH-NAME} | (cd /tmp; tar xvzf - ${vmName}/tether.debug ${vmName}/vmware.log)
     Log  ${output}
     ${rc}  ${output}=  Run And Return Rc and Output  ls -l /tmp/${vmName}/vmware.log
     Should Be Equal As Integers  ${rc}  0
